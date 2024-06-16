@@ -19,8 +19,19 @@
   "contributes": {
     "commands": [
       {
-        "command": "nimiro.format",
+        "command": "nimiro.formatNumber",
         "title": "Nimiro: Format"
+      },
+      {
+        "command": "nimiro.formatNumberKbd",
+        "title": "Nimiro format on keybindings pressed"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "nimiro.formatNumberKbd",
+        "key": "ctrl+shift+n",
+        "when": "editorTextFocus"
       }
     ]
   },

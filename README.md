@@ -4,6 +4,12 @@ This is the README for your extension "nimiro". An extension to display juxtapos
 
 ## Features/Tutorial
 
+### Format long numbers on keybindings
+
+To format a number select a text<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>
+
+![Keybinding result](/docs/assets/kbd-result.png)
+
 ### Format long numbers from command pallet
 
 For example, to better read this number: `100000000000`. 
