@@ -1,7 +1,5 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import { formatNumberWithSpaces, isNumber } from "./utils";
+import { formatNumberWithSpaces, addFractionalPart, isNumber } from "./utils";
 
 export function activate(context: vscode.ExtensionContext) {
   const cmdWithInput = vscode.commands.registerCommand(
@@ -23,12 +21,42 @@ export function activate(context: vscode.ExtensionContext) {
       if (editor) {
         const document = editor.document;
         const selection = editor.selection;
-        const selectedText = document.getText(selection);
+        let selectedText = document.getText(selection);
 
         if (isNumber(selectedText)) {
-          vscode.window.showInformationMessage(
-            formatNumberWithSpaces(selectedText)
-          );
+          // Format with spaces and fractional part
+          const formattedNumber = formatNumberWithSpaces(selectedText);
+          const formattedWithFraction = addFractionalPart(formattedNumber);
+
+          vscode.window.showInformationMessage(formattedWithFraction);
+        }
+      }
+    }
+  );
+
+  const cmdAddFractionalPart = vscode.commands.registerCommand(
+    "nimiro.addFractionalPart",
+    async () => {
+      const nb = await vscode.window.showInputBox({
+        placeHolder: "Insert number to add fractional part, example: 10000",
+      });
+      if (nb) {
+        vscode.window.showInformationMessage(addFractionalPart(nb));
+      }
+    }
+  );
+
+  const cmdAddFractionalPartKbd = vscode.commands.registerCommand(
+    "nimiro.addFractionalPartKbd",
+    async () => {
+      const editor = vscode.window.activeTextEditor;
+      if (editor) {
+        const document = editor.document;
+        const selection = editor.selection;
+        let selectedText = document.getText(selection);
+
+        if (isNumber(selectedText)) {
+          vscode.window.showInformationMessage(addFractionalPart(selectedText));
         }
       }
     }
@@ -36,7 +64,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(cmdWithInput);
   context.subscriptions.push(cmdWithKbd);
+  context.subscriptions.push(cmdAddFractionalPart);
+  context.subscriptions.push(cmdAddFractionalPartKbd);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
