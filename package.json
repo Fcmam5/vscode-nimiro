@@ -25,12 +25,25 @@
       {
         "command": "nimiro.formatNumberKbd",
         "title": "Nimiro format on keybindings pressed"
+      },
+      {
+        "command": "nimiro.addFractionalPart",
+        "title": "Add Fractional Part"
+      },
+      {
+        "command": "nimiro.addFractionalPartKbd",
+        "title": "Add Fractional Part for Selected Number"
       }
     ],
     "keybindings": [
       {
         "command": "nimiro.formatNumberKbd",
         "key": "ctrl+shift+n",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "nimiro.addFractionalPartKbd",
+        "key": "ctrl+shift+m",
         "when": "editorTextFocus"
       }
     ]
