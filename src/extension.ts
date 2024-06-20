@@ -3,6 +3,21 @@
 import * as vscode from "vscode";
 import { formatNumberWithSpaces, isNumber } from "./utils";
 
+function showFormattedNumber() {
+  const editor = vscode.window.activeTextEditor;
+  if (editor) {
+    const document = editor.document;
+    const selection = editor.selection;
+    const selectedText = document.getText(selection);
+
+    if (isNumber(selectedText)) {
+      vscode.window.showInformationMessage(
+        formatNumberWithSpaces(selectedText)
+      );
+    }
+  }
+}
+
 export function activate(context: vscode.ExtensionContext) {
   const cmdWithInput = vscode.commands.registerCommand(
     "nimiro.formatNumber",
@@ -18,24 +33,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   const cmdWithKbd = vscode.commands.registerCommand(
     "nimiro.formatNumberKbd",
-    async () => {
-      const editor = vscode.window.activeTextEditor;
-      if (editor) {
-        const document = editor.document;
-        const selection = editor.selection;
-        const selectedText = document.getText(selection);
-
-        if (isNumber(selectedText)) {
-          vscode.window.showInformationMessage(
-            formatNumberWithSpaces(selectedText)
-          );
-        }
-      }
-    }
+    showFormattedNumber
   );
 
-  context.subscriptions.push(cmdWithInput);
-  context.subscriptions.push(cmdWithKbd);
+  context.subscriptions.push(cmdWithKbd, cmdWithInput);
 }
 
 // This method is called when your extension is deactivated
